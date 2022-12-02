@@ -50,7 +50,7 @@ module.exports = plugin.withOptions(
   function () {
     return {
       theme: {
-        extends: {
+        extend: {
           colors: {
             accent: {
               50: withOpacityValue('--color-accent-50'),
