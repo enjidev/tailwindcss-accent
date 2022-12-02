@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-accent",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Add dynamic accent color to your Tailwind CSS project.",
   "main": "src/index.js",
   "types": "src/index.d.ts",
@@ -27,10 +27,12 @@
   },
   "homepage": "https://github.com/enjidev/tailwindcss-accent#readme",
   "keywords": [
-    "create-tailwind-plugin",
     "tailwind-css-plugin",
     "tailwindcss",
-    "plugin"
+    "plugin",
+    "accent-color",
+    "theming",
+    "theme"
   ],
   "author": "enjidev",
   "license": "MIT",
