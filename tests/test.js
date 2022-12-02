@@ -1,7 +1,7 @@
 const merge = require('lodash/merge');
 const postcss = require('postcss');
 const tailwindcss = require('tailwindcss');
-const customPlugin = require('./src/index');
+const customPlugin = require('../src/index');
 
 function generatePluginCss(options) {
   const config = {
