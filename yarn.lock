@@ -3357,11 +3357,6 @@ jest-leak-detector@^26.6.2:
     jest-get-type "^26.3.0"
     pretty-format "^26.6.2"
 
-jest-matcher-css@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/jest-matcher-css/-/jest-matcher-css-1.1.0.tgz#d2061f4b6bda3b6c2800d4e6cc5c96dad7dc4abd"
-  integrity sha512-HycxxNw36Cx/CD/XjIt4qcJ0SDpEH9F2ZWTndoyfK7nLiZnIJp/sGSdpQC4GoaC/XshKEee7nBJ81FhIScc5vA==
-
 jest-matcher-utils@^26.6.2:
   version "26.6.2"
   resolved "https://registry.yarnpkg.com/jest-matcher-utils/-/jest-matcher-utils-26.6.2.tgz#8e6fd6e863c8b2d31ac6472eeb237bc595e53e7a"

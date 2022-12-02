@@ -1,43 +1,72 @@
 const plugin = require('tailwindcss/plugin');
+const colors = require('tailwindcss/colors');
+const convert = require('color-convert');
+const omit = require('lodash/omit');
+const pick = require('lodash/pick');
+const isArray = require('lodash/isArray');
+const isEmpty = require('lodash/isEmpty');
+const forEach = require('lodash/forEach');
 
-module.exports = plugin(
-  function ({ addUtilities, theme, variants }) {
-    // If your plugin requires user config,
-    // you can access these options here.
-    // Docs: https://tailwindcss.com/docs/plugins#exposing-options
-    const options = theme('accent');
+function withOpacityValue(variable) {
+  return ({ opacityValue }) => {
+    if (opacityValue === undefined) {
+      return `rgb(var(${variable}))`;
+    }
+    return `rgb(var(${variable}) / ${opacityValue})`;
+  };
+}
 
-    // Add CSS-in-JS syntax to create utility classes.
-    // Docs: https://tailwindcss.com/docs/plugins#adding-utilities
-    const utilities = {
-      '.example-utility-class': {
-        display: 'block',
-      },
-    };
+module.exports = plugin.withOptions(
+  function (options = {}) {
+    let accentColors = omit(colors, [
+      'black',
+      'white',
+      'inherit',
+      'current',
+      'transparent',
+    ]);
 
-    // Conditionally add utility class based on user configuration.
-    if (options.YOUR_PLUGIN_CUSTOM_OPTION) {
-      utilities['.custom-utility-class'] = {
-        'background-color': 'red',
-      };
+    if (options.colors && isArray(options.colors) && !isEmpty(options.colors)) {
+      accentColors = pick(accentColors, options.colors);
     }
 
-    addUtilities(utilities, {
-      variants: variants('accent'),
-    });
+    return function ({ addBase }) {
+      const baseStyle = {};
+
+      forEach(accentColors, (colorShades, name) => {
+        const selector = `[data-accent='${name}']`;
+        baseStyle[selector] = {};
+
+        forEach(colorShades, (value, shade) => {
+          const cssVar = `--color-accent-${shade}`;
+          baseStyle[selector][cssVar] = convert.hex.rgb(value).join(' ');
+        });
+      });
+
+      // Registering new base styles
+      addBase(baseStyle);
+    };
   },
-  {
-    theme: {
-      // Default options for your custom plugin.
-      // Docs: https://tailwindcss.com/docs/plugins#exposing-options
-      accent: {
-        YOUR_PLUGIN_CUSTOM_OPTION: false,
+  function () {
+    return {
+      theme: {
+        extends: {
+          colors: {
+            accent: {
+              50: withOpacityValue('--color-accent-50'),
+              100: withOpacityValue('--color-accent-100'),
+              200: withOpacityValue('--color-accent-200'),
+              300: withOpacityValue('--color-accent-300'),
+              400: withOpacityValue('--color-accent-400'),
+              500: withOpacityValue('--color-accent-500'),
+              600: withOpacityValue('--color-accent-600'),
+              700: withOpacityValue('--color-accent-700'),
+              800: withOpacityValue('--color-accent-800'),
+              900: withOpacityValue('--color-accent-900'),
+            },
+          },
+        },
       },
-    },
-    variants: {
-      // Default variants for your custom plugin.
-      // Docs: https://tailwindcss.com/docs/plugins#variants
-      accent: ['responsive'],
-    },
+    };
   }
 );
