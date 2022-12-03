@@ -6,7 +6,8 @@
   "types": "src/index.d.ts",
   "files": [
     "src/index.js",
-    "src/index.d.ts"
+    "src/index.d.ts",
+    "src/utils.js"
   ],
   "scripts": {
     "lint": "eslint .",
