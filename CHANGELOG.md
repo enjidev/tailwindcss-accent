@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/enjidev/tailwindcss-accent/compare/v2.0.0...v2.1.0) (2022-12-03)
+
+
+### Features
+
+* add cssVarsPrefix option ([bfa5fec](https://github.com/enjidev/tailwindcss-accent/commit/bfa5fec2eedf4306fc161e2d84591f1c38d3dbe2))
+
 ## [2.0.0](https://github.com/enjidev/tailwindcss-accent/compare/v1.2.0...v2.0.0) (2022-12-03)
 
 
