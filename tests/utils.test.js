@@ -1,4 +1,4 @@
-const { hexToRgb, toKebabCase, withOpacityValue } = require('../src/utils');
+const { hexToRgb, withOpacityValue } = require('../src/utils');
 
 describe('hexToRgb()', () => {
   it('transform six digit hex.', () => {
@@ -15,12 +15,6 @@ describe('hexToRgb()', () => {
 
   it('transform three digit hex without #.', () => {
     expect(hexToRgb('fff')).toEqual('255 255 255');
-  });
-});
-
-describe('toKebabCase()', () => {
-  it('transform to camel case.', () => {
-    expect(toKebabCase('lightBlue')).toEqual('light-blue');
   });
 });
 

@@ -7,7 +7,7 @@ const isArray = require('lodash/isArray');
 const isEmpty = require('lodash/isEmpty');
 const forEach = require('lodash/forEach');
 
-const { hexToRgb, toKebabCase, withOpacityValue } = require('./utils');
+const { hexToRgb, withOpacityValue } = require('./utils');
 
 module.exports = plugin.withOptions(
   (options = {}) => {
@@ -41,9 +41,9 @@ module.exports = plugin.withOptions(
         let selector;
 
         if (name === defaultColor) {
-          selector = `:root, [data-accent='${toKebabCase(name)}']`;
+          selector = `:root, [data-accent='${name}']`;
         } else {
-          selector = `[data-accent='${toKebabCase(name)}']`;
+          selector = `[data-accent='${name}']`;
         }
 
         baseStyles[selector] = {};
