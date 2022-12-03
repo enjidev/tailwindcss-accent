@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/enjidev/tailwindcss-accent/compare/v1.2.0...v2.0.0) (2022-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* set colors option as required
+
+### Features
+
+* remove lodash dependency ([efb443d](https://github.com/enjidev/tailwindcss-accent/commit/efb443d4afca9bcdb6634e8354188cec88892638))
+
+
+* set colors option as required ([ef6b983](https://github.com/enjidev/tailwindcss-accent/commit/ef6b98397099100bdc6e3e520eda33d2075cae3b))
+
 ## [1.2.0](https://github.com/enjidev/tailwindcss-accent/compare/v1.1.0...v1.2.0) (2022-12-03)
 
 

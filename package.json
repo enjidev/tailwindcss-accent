@@ -1,6 +1,6 @@
 {
   "name": "tailwindcss-accent",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Add dynamic accent color to your Tailwind CSS project.",
   "main": "src/index.js",
   "types": "src/index.d.ts",
