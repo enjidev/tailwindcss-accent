@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/enjidev/tailwindcss-accent/compare/v1.1.0...v1.2.0) (2022-12-03)
+
+
+### Features
+
+* add root option ([b20d472](https://github.com/enjidev/tailwindcss-accent/commit/b20d4722209704cad9d9c640aefe7e5acc961a99))
+* support for Tailwind CSS v2 and v3 ([7e39851](https://github.com/enjidev/tailwindcss-accent/commit/7e39851b7d2ddca2de747f4089b15f0f77db4ffe))
+
 ## 1.1.0 (2022-12-02)
 
 
