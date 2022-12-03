@@ -8,7 +8,7 @@ Using this plugin will add an `accent` color classes to your Tailwind CSS projec
 
 Works with Tailwind CSS v2 and v3.
 
-## Installation
+## Usage
 
 Install the plugin from npm:
 
@@ -23,27 +23,18 @@ Then add the plugin to your `tailwind.config.js` file:
 module.exports = {
   plugins: [
     require('tailwindcss-accent')({
-      colors: ['violet', 'blue'], // (OPTIONAL) Only include specific color(s).
-      root: 'blue', // (OPTIONAL) Set selected color as :root accent color.
+      colors: ['violet', 'blue'], // REQUIRED, include specific color(s).
+      root: 'blue', // OPTIONAL, set color from colors option as :root accent color.
     }),
   ],
 };
 ```
 
-NOTES:
+## Available Colors
 
-- Make sure to only include the colors you use to make the CSS output file size smaller.
-- If the `colors` option is specified, the `root` color MUST be the one that comes in the `colors` option.
+Check the Tailwind CSS default [color palette](https://tailwindcss.com/docs/customizing-colors).
 
-## Available Accent Colors
-
-Possible values are:
-
-`slate`, `gray`, `zinc`, `neutral`, `stone`, `red`, `orange`, `amber`, `yellow`, `lime`, `green`, `emerald`, `teal`, `cyan`, `sky`, `blue`, `indigo`, `violet`, `purple`, `fuchsia`, `pink`, and `rose`.
-
-> Check the Tailwind CSS default [color palette](https://tailwindcss.com/docs/customizing-colors) for more detailed and updated information.
-
-## Usage
+## Example
 
 Add `data-accent` attribute to parent element, for example: `html` element.
 
