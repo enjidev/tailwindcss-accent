@@ -1,20 +1,44 @@
 const { generatePluginCss, generatePluginCssV2 } = require('./helpers');
 
 describe('with tailwindcss v3', () => {
-  it('correctly generate base styles selectors.', () => {
+  it('returns nothing if colors option is not specified.', () => {
     return generatePluginCss().then((css) => {
-      expect(css).toContain(`[data-accent='sky']`);
+      expect(css).toEqual('');
     });
   });
 
-  it('correctly generate selected base styles selectors.', () => {
+  it('returns nothing if colors option is empty string.', () => {
+    return generatePluginCss({ colors: '' }).then((css) => {
+      expect(css).toEqual('');
+    });
+  });
+
+  it('returns nothing if colors option is empty array.', () => {
+    return generatePluginCss({ colors: [] }).then((css) => {
+      expect(css).toEqual('');
+    });
+  });
+
+  it('returns nothing if colors option is array with not available colors.', () => {
+    return generatePluginCss({ colors: ['maroon'] }).then((css) => {
+      expect(css).toEqual('');
+    });
+  });
+
+  it('returns nothing if root option is specified and colors option is not specified.', () => {
+    return generatePluginCss({ root: 'sky' }).then((css) => {
+      expect(css).toEqual('');
+    });
+  });
+
+  it('correctly generate selected base style selectors.', () => {
     return generatePluginCss({ colors: ['rose'] }).then((css) => {
       expect(css).toContain(`[data-accent='rose']`);
       expect(css).not.toContain(`[data-accent='sky']`);
     });
   });
 
-  it('correctly generate selected base styles selectors with root.', () => {
+  it('correctly generate selected base style selectors with root.', () => {
     return generatePluginCss({ colors: ['sky', 'rose'], root: 'sky' }).then(
       (css) => {
         expect(css).toContain(`:root, [data-accent='sky']`);
@@ -22,52 +46,52 @@ describe('with tailwindcss v3', () => {
       }
     );
   });
-
-  it('should generate root styles.', () => {
-    return generatePluginCss({ root: 'sky' }).then((css) => {
-      expect(css).toContain(`:root, [data-accent='sky']`);
-    });
-  });
-
-  it('should not generate root styles.', () => {
-    return generatePluginCss({ colors: ['rose'], root: 'sky' }).then((css) => {
-      expect(css).not.toContain(`:root, [data-accent='sky']`);
-    });
-  });
 });
 
 describe('with tailwindcss v2', () => {
-  it('correctly generate base styles selectors.', () => {
+  it('returns nothing if colors option is not specified.', () => {
     return generatePluginCssV2().then((css) => {
-      expect(css).toContain(`[data-accent='sky']`);
+      expect(css).toEqual('');
     });
   });
 
-  it('correctly generate selected base styles selectors.', () => {
+  it('returns nothing if colors option is empty string.', () => {
+    return generatePluginCssV2({ colors: '' }).then((css) => {
+      expect(css).toEqual('');
+    });
+  });
+
+  it('returns nothing if colors option is empty array.', () => {
+    return generatePluginCssV2({ colors: [] }).then((css) => {
+      expect(css).toEqual('');
+    });
+  });
+
+  it('returns nothing if colors option is an array with not available colors.', () => {
+    return generatePluginCssV2({ colors: ['maroon'] }).then((css) => {
+      expect(css).toEqual('');
+    });
+  });
+
+  it('returns nothing if root option is specified and colors option is not specified.', () => {
+    return generatePluginCssV2({ root: 'sky' }).then((css) => {
+      expect(css).toEqual('');
+    });
+  });
+
+  it('correctly generate selected base style selectors.', () => {
     return generatePluginCssV2({ colors: ['rose'] }).then((css) => {
       expect(css).toContain(`[data-accent='rose']`);
       expect(css).not.toContain(`[data-accent='sky']`);
     });
   });
 
-  it('correctly generate selected base styles selectors with root.', () => {
+  it('correctly generate selected base style selectors with root.', () => {
     return generatePluginCssV2({ colors: ['sky', 'rose'], root: 'sky' }).then(
       (css) => {
         expect(css).toContain(`:root, [data-accent='sky']`);
         expect(css).not.toContain(`:root, [data-accent='rose']`);
       }
     );
-  });
-
-  it('should generate root styles.', () => {
-    return generatePluginCss({ root: 'sky' }).then((css) => {
-      expect(css).toContain(`:root, [data-accent='sky']`);
-    });
-  });
-
-  it('should not generate root styles.', () => {
-    return generatePluginCss({ colors: ['rose'], root: 'sky' }).then((css) => {
-      expect(css).not.toContain(`:root, [data-accent='sky']`);
-    });
   });
 });

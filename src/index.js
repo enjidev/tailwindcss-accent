@@ -2,58 +2,41 @@ const plugin = require('tailwindcss/plugin');
 const colors = require('tailwindcss/colors');
 const omit = require('lodash/omit');
 const pick = require('lodash/pick');
-const hasIn = require('lodash/hasIn');
 const isArray = require('lodash/isArray');
 const isEmpty = require('lodash/isEmpty');
 const forEach = require('lodash/forEach');
 
 const { hexToRgb, withOpacityValue } = require('./utils');
 
+const UNUSED_COLORS = ['black', 'white', 'inherit', 'current', 'transparent'];
+
 module.exports = plugin.withOptions(
   (options = {}) => {
-    let defaultColor = '';
+    // Return if the colors option needs to be specified.
+    if (!options.colors && !isArray(options.colors) && isEmpty(options.colors))
+      return () => {};
 
-    // Omit unused colors.
-    let accentColors = omit(colors, [
-      'black',
-      'white',
-      'inherit',
-      'current',
-      'transparent',
-    ]);
-
-    // Only pick colors based on colors option.
-    if (options.colors && isArray(options.colors) && !isEmpty(options.colors)) {
-      accentColors = pick(accentColors, options.colors);
-    }
-
-    // Set default root color.
-    if (options.root && !isEmpty(options.root)) {
-      if (hasIn(accentColors, options.root)) {
-        defaultColor = options.root;
-      }
-    }
+    // Pick selected colors.
+    const accents = pick(omit(colors, UNUSED_COLORS), options.colors);
 
     return ({ addBase }) => {
       const baseStyles = {};
 
-      forEach(accentColors, (colorShades, name) => {
-        let selector;
+      forEach(accents, (colorShades, name) => {
+        let selector = `[data-accent='${name}']`;
 
-        if (name === defaultColor) {
+        if (name === options.root) {
           selector = `:root, [data-accent='${name}']`;
-        } else {
-          selector = `[data-accent='${name}']`;
         }
 
         baseStyles[selector] = {};
-        forEach(colorShades, (value, shade) => {
+        forEach(colorShades, (color, shade) => {
           const cssVar = `--color-accent-${shade}`;
-          baseStyles[selector][cssVar] = hexToRgb(value);
+          baseStyles[selector][cssVar] = hexToRgb(color);
         });
       });
 
-      // Registering new base styles
+      // Register new base styles.
       addBase(baseStyles);
     };
   },
