@@ -6,6 +6,8 @@ This plugin creates a dynamic accent color using CSS custom properties based on 
 
 Using this plugin will add an `accent` color classes to your Tailwind CSS project, for example: `bg-accent-500`, `dark:outline-accent-200`, etc.
 
+Works with Tailwind CSS v2 and v3.
+
 ## Installation
 
 Install the plugin from npm:
