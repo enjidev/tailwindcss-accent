@@ -1,39 +1,43 @@
 const plugin = require('tailwindcss/plugin');
 const colors = require('tailwindcss/colors');
-const omit = require('lodash/omit');
-const pick = require('lodash/pick');
-const isArray = require('lodash/isArray');
-const isEmpty = require('lodash/isEmpty');
-const forEach = require('lodash/forEach');
 
 const { hexToRgb, withOpacityValue } = require('./utils');
 
-const UNUSED_COLORS = ['black', 'white', 'inherit', 'current', 'transparent'];
-
 module.exports = plugin.withOptions(
   (options = {}) => {
-    // Return if the colors option needs to be specified.
-    if (!options.colors && !isArray(options.colors) && isEmpty(options.colors))
-      return () => {};
-
-    // Pick selected colors.
-    const accents = pick(omit(colors, UNUSED_COLORS), options.colors);
+    // Early return if the colors option isn't specified.
+    if (!options.colors && !Array.isArray(options.colors)) return () => {};
 
     return ({ addBase }) => {
       const baseStyles = {};
 
-      forEach(accents, (colorShades, name) => {
-        let selector = `[data-accent='${name}']`;
+      const PICK_COLORS = options.colors;
+      const OMIT_COLORS = [
+        'black',
+        'white',
+        'inherit',
+        'current',
+        'transparent',
+      ];
 
-        if (name === options.root) {
-          selector = `:root, [data-accent='${name}']`;
+      Object.keys(colors).forEach((name) => {
+        // Omit unused colors and pick selected colors.
+        if (!OMIT_COLORS.includes(name) && PICK_COLORS.includes(name)) {
+          // Add the :root selector if root option match with the current color.
+          const selector =
+            options.root !== name
+              ? `[data-accent='${name}']`
+              : `:root, [data-accent='${name}']`;
+
+          baseStyles[selector] = {};
+
+          // Generate CSS Custom Properties for the current color.
+          const colorShades = colors[name];
+          Object.keys(colorShades).forEach((shade) => {
+            const cssVar = `--color-accent-${shade}`;
+            baseStyles[selector][cssVar] = hexToRgb(colorShades[shade]);
+          });
         }
-
-        baseStyles[selector] = {};
-        forEach(colorShades, (color, shade) => {
-          const cssVar = `--color-accent-${shade}`;
-          baseStyles[selector][cssVar] = hexToRgb(color);
-        });
       });
 
       // Register new base styles.
