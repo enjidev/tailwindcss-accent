@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write --loglevel=error . !CHANGELOG.md",
+    "format": "prettier --write --loglevel=error .",
     "test": "jest",
     "test:watch": "jest --watch",
     "release": "standard-version",

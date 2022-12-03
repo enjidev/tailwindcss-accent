@@ -2,7 +2,7 @@ const postcss = require('postcss');
 const tailwindcss = require('tailwindcss');
 const customPlugin = require('../src/index');
 
-module.exports.generatePluginCss = function (options) {
+module.exports.generatePluginCss = (options) => {
   const config = {
     corePlugins: false,
     plugins: [customPlugin(options)],

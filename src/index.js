@@ -9,7 +9,7 @@ const forEach = require('lodash/forEach');
 const { hexToRgb, toKebabCase, withOpacityValue } = require('./utils');
 
 module.exports = plugin.withOptions(
-  function (options = {}) {
+  (options = {}) => {
     let accentColors = omit(colors, [
       'black',
       'white',
@@ -22,7 +22,7 @@ module.exports = plugin.withOptions(
       accentColors = pick(accentColors, options.colors);
     }
 
-    return function ({ addBase }) {
+    return ({ addBase }) => {
       const baseStyle = {};
 
       forEach(accentColors, (colorShades, name) => {
@@ -39,7 +39,7 @@ module.exports = plugin.withOptions(
       addBase(baseStyle);
     };
   },
-  function () {
+  () => {
     return {
       theme: {
         extend: {
