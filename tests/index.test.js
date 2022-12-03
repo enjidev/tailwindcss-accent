@@ -22,6 +22,18 @@ describe('with tailwindcss v3', () => {
       }
     );
   });
+
+  it('should generate root styles.', () => {
+    return generatePluginCss({ root: 'sky' }).then((css) => {
+      expect(css).toContain(`:root, [data-accent='sky']`);
+    });
+  });
+
+  it('should not generate root styles.', () => {
+    return generatePluginCss({ colors: ['rose'], root: 'sky' }).then((css) => {
+      expect(css).not.toContain(`:root, [data-accent='sky']`);
+    });
+  });
 });
 
 describe('with tailwindcss v2', () => {
@@ -45,5 +57,17 @@ describe('with tailwindcss v2', () => {
         expect(css).not.toContain(`:root, [data-accent='rose']`);
       }
     );
+  });
+
+  it('should generate root styles.', () => {
+    return generatePluginCss({ root: 'sky' }).then((css) => {
+      expect(css).toContain(`:root, [data-accent='sky']`);
+    });
+  });
+
+  it('should not generate root styles.', () => {
+    return generatePluginCss({ colors: ['rose'], root: 'sky' }).then((css) => {
+      expect(css).not.toContain(`:root, [data-accent='sky']`);
+    });
   });
 });
