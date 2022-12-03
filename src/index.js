@@ -1,20 +1,12 @@
 const plugin = require('tailwindcss/plugin');
 const colors = require('tailwindcss/colors');
-const convert = require('color-convert');
 const omit = require('lodash/omit');
 const pick = require('lodash/pick');
 const isArray = require('lodash/isArray');
 const isEmpty = require('lodash/isEmpty');
 const forEach = require('lodash/forEach');
 
-function withOpacityValue(variable) {
-  return ({ opacityValue }) => {
-    if (opacityValue === undefined) {
-      return `rgb(var(${variable}))`;
-    }
-    return `rgb(var(${variable}) / ${opacityValue})`;
-  };
-}
+const { hexToRgb, toKebabCase, withOpacityValue } = require('./utils');
 
 module.exports = plugin.withOptions(
   function (options = {}) {
@@ -34,12 +26,12 @@ module.exports = plugin.withOptions(
       const baseStyle = {};
 
       forEach(accentColors, (colorShades, name) => {
-        const selector = `[data-accent='${name}']`;
+        const selector = `[data-accent='${toKebabCase(name)}']`;
         baseStyle[selector] = {};
 
         forEach(colorShades, (value, shade) => {
           const cssVar = `--color-accent-${shade}`;
-          baseStyle[selector][cssVar] = convert.hex.rgb(value).join(' ');
+          baseStyle[selector][cssVar] = hexToRgb(value);
         });
       });
 
