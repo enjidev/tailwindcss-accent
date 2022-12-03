@@ -2,6 +2,7 @@ const plugin = require('tailwindcss/plugin');
 const colors = require('tailwindcss/colors');
 const omit = require('lodash/omit');
 const pick = require('lodash/pick');
+const hasIn = require('lodash/hasIn');
 const isArray = require('lodash/isArray');
 const isEmpty = require('lodash/isEmpty');
 const forEach = require('lodash/forEach');
@@ -10,6 +11,9 @@ const { hexToRgb, toKebabCase, withOpacityValue } = require('./utils');
 
 module.exports = plugin.withOptions(
   (options = {}) => {
+    let defaultColor = '';
+
+    // Omit unused colors.
     let accentColors = omit(colors, [
       'black',
       'white',
@@ -18,25 +22,39 @@ module.exports = plugin.withOptions(
       'transparent',
     ]);
 
+    // Only pick colors based on colors option.
     if (options.colors && isArray(options.colors) && !isEmpty(options.colors)) {
       accentColors = pick(accentColors, options.colors);
     }
 
+    // Set default root color.
+    if (options.root && !isEmpty(options.root)) {
+      if (hasIn(accentColors, options.root)) {
+        defaultColor = options.root;
+      }
+    }
+
     return ({ addBase }) => {
-      const baseStyle = {};
+      const baseStyles = {};
 
       forEach(accentColors, (colorShades, name) => {
-        const selector = `[data-accent='${toKebabCase(name)}']`;
-        baseStyle[selector] = {};
+        let selector;
 
+        if (name === defaultColor) {
+          selector = `:root, [data-accent='${toKebabCase(name)}']`;
+        } else {
+          selector = `[data-accent='${toKebabCase(name)}']`;
+        }
+
+        baseStyles[selector] = {};
         forEach(colorShades, (value, shade) => {
           const cssVar = `--color-accent-${shade}`;
-          baseStyle[selector][cssVar] = hexToRgb(value);
+          baseStyles[selector][cssVar] = hexToRgb(value);
         });
       });
 
       // Registering new base styles
-      addBase(baseStyle);
+      addBase(baseStyles);
     };
   },
   () => {
