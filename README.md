@@ -22,11 +22,10 @@ Then add the plugin to your `tailwind.config.js` file:
 // tailwind.config.js
 module.exports = {
   plugins: [
-    // ...
     require('tailwindcss-accent')({
       colors: ['violet', 'blue'], // (OPTIONAL) Only include specific color(s).
+      root: 'blue', // (OPTIONAL) Set selected color as :root accent color.
     }),
-    // ...
   ],
 };
 ```
