@@ -15,6 +15,11 @@ declare function plugin<T extends Colors>(options: {
    * Set color from colors option as :root accent color.
    */
   root?: T;
+
+  /**
+   * Set prefix for css variables name. Default to 'tw-ta'.
+   */
+  cssVarsPrefix?: string;
 }): {
   handler: () => void;
 };

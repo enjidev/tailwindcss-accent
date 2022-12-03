@@ -8,6 +8,10 @@ module.exports = plugin.withOptions(
     // Early return if the colors option isn't specified.
     if (!options.colors && !Array.isArray(options.colors)) return () => {};
 
+    const cssVarsPrefix = options.cssVarsPrefix
+      ? options.cssVarsPrefix
+      : 'tw-ta';
+
     return ({ addBase }) => {
       const baseStyles = {};
 
@@ -34,7 +38,7 @@ module.exports = plugin.withOptions(
           // Generate CSS Custom Properties for the current color.
           const colorShades = colors[name];
           Object.keys(colorShades).forEach((shade) => {
-            const cssVar = `--color-accent-${shade}`;
+            const cssVar = `--${cssVarsPrefix}-accent-${shade}`;
             baseStyles[selector][cssVar] = hexToRgb(colorShades[shade]);
           });
         }
@@ -44,22 +48,26 @@ module.exports = plugin.withOptions(
       addBase(baseStyles);
     };
   },
-  () => {
+  (options = {}) => {
+    const cssVarsPrefix = options.cssVarsPrefix
+      ? options.cssVarsPrefix
+      : 'tw-ta';
+
     return {
       theme: {
         extend: {
           colors: {
             accent: {
-              50: withOpacityValue('--color-accent-50'),
-              100: withOpacityValue('--color-accent-100'),
-              200: withOpacityValue('--color-accent-200'),
-              300: withOpacityValue('--color-accent-300'),
-              400: withOpacityValue('--color-accent-400'),
-              500: withOpacityValue('--color-accent-500'),
-              600: withOpacityValue('--color-accent-600'),
-              700: withOpacityValue('--color-accent-700'),
-              800: withOpacityValue('--color-accent-800'),
-              900: withOpacityValue('--color-accent-900'),
+              50: withOpacityValue(`--${cssVarsPrefix}-accent-50`),
+              100: withOpacityValue(`--${cssVarsPrefix}-accent-100`),
+              200: withOpacityValue(`--${cssVarsPrefix}-accent-200`),
+              300: withOpacityValue(`--${cssVarsPrefix}-accent-300`),
+              400: withOpacityValue(`--${cssVarsPrefix}-accent-400`),
+              500: withOpacityValue(`--${cssVarsPrefix}-accent-500`),
+              600: withOpacityValue(`--${cssVarsPrefix}-accent-600`),
+              700: withOpacityValue(`--${cssVarsPrefix}-accent-700`),
+              800: withOpacityValue(`--${cssVarsPrefix}-accent-800`),
+              900: withOpacityValue(`--${cssVarsPrefix}-accent-900`),
             },
           },
         },

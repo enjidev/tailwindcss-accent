@@ -31,6 +31,20 @@ describe('with tailwindcss v3', () => {
     });
   });
 
+  it('correctly generate css custom properties.', () => {
+    return generatePluginCss({ colors: ['rose'] }).then((css) => {
+      expect(css).toContain(`--tw-ta-accent-500`);
+    });
+  });
+
+  it('correctly generate customized css custom properties.', () => {
+    return generatePluginCss({ colors: ['rose'], cssVarsPrefix: 'color' }).then(
+      (css) => {
+        expect(css).toContain(`--color-accent-500`);
+      }
+    );
+  });
+
   it('correctly generate selected base style selectors.', () => {
     return generatePluginCss({ colors: ['rose'] }).then((css) => {
       expect(css).toContain(`[data-accent='rose']`);
@@ -76,6 +90,21 @@ describe('with tailwindcss v2', () => {
   it('returns nothing if root option is specified and colors option is not specified.', () => {
     return generatePluginCssV2({ root: 'sky' }).then((css) => {
       expect(css).toEqual('');
+    });
+  });
+
+  it('correctly generate css custom properties.', () => {
+    return generatePluginCssV2({ colors: ['rose'] }).then((css) => {
+      expect(css).toContain(`--tw-ta-accent-500`);
+    });
+  });
+
+  it('correctly generate customized css custom properties.', () => {
+    return generatePluginCssV2({
+      colors: ['rose'],
+      cssVarsPrefix: 'color',
+    }).then((css) => {
+      expect(css).toContain(`--color-accent-500`);
     });
   });
 

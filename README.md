@@ -6,7 +6,7 @@ This plugin creates a dynamic accent color using CSS custom properties based on 
 
 Using this plugin will add an `accent` color classes to your Tailwind CSS project, for example: `bg-accent-500`, `dark:outline-accent-200`, etc.
 
-Works with Tailwind CSS v2 and v3.
+Tested with Tailwind CSS v2 and v3.
 
 ## Usage
 
@@ -23,8 +23,12 @@ Then add the plugin to your `tailwind.config.js` file:
 module.exports = {
   plugins: [
     require('tailwindcss-accent')({
-      colors: ['violet', 'blue'], // REQUIRED, include specific color(s).
-      root: 'blue', // OPTIONAL, set color from colors option as :root accent color.
+      // REQUIRED, include specific color(s).
+      colors: ['violet', 'blue'],
+      // OPTIONAL, set color from colors option as :root accent color.
+      root: 'blue',
+      // OPTIONAL, set prefix for css variables name. default to 'tw-ta' (e.g: --tw-ta-accent-200)
+      cssVarsPrefix: 'tw-plugin', // result: --tw-plugin-accent-200
     }),
   ],
 };
@@ -58,8 +62,6 @@ document.documentElement.setAttribute('data-accent', 'blue');
 ```
 
 The component will automatically change the text color from **violet-400** to **blue-400**.
-
-> Check the [real-world example](#real-world-example) for a more practical implementation.
 
 ## Real-world Example
 
