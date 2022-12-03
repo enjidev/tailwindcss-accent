@@ -6,7 +6,19 @@ type Colors = keyof Omit<
 >;
 
 declare function plugin<T extends Colors>(
-  options?: Partial<{ colors: Array<T>; root: T }>
+  options?: Partial<{
+    /**
+     * Only include specific color(s).
+     */
+    colors: Array<T>;
+
+    /**
+     * Set selected color as :root accent color.
+     *
+     * If the colors option is specified, the :root color MUST be the one that comes in the colors option.
+     */
+    root: T;
+  }>
 ): {
   handler: () => void;
 };

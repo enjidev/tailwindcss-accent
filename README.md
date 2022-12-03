@@ -30,7 +30,10 @@ module.exports = {
 };
 ```
 
-> NOTE: Make sure to only include the colors you use to make the CSS output file size smaller.
+NOTES:
+
+- Make sure to only include the colors you use to make the CSS output file size smaller.
+- If the `colors` option is specified, the `root` color MUST be the one that comes in the `colors` option.
 
 ## Available Accent Colors
 
