@@ -53,7 +53,7 @@ Let's use the `accent` color class on our component.
 <div class="text-accent-400">Hello, World!</div>
 ```
 
-Note that based on the closest parent `data-accent` value, the current component will have a **violet** text color.
+Note that based on the closest parent `data-accent` value, the current component will have a **violet-400** text color.
 
 Then, somewhere on the button's click event:
 
@@ -62,7 +62,7 @@ Then, somewhere on the button's click event:
 document.documentElement.setAttribute('data-accent', 'blue');
 ```
 
-The component will automatically change the text color from **violet** to **blue**.
+The component will automatically change the text color from **violet-400** to **blue-400**.
 
 > Check the [real-world example](#real-world-example) for a more practical implementation.
 
