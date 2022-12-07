@@ -31,13 +31,13 @@ describe('with tailwindcss v3', () => {
     });
   });
 
-  it('correctly generate css custom properties.', () => {
+  it('correctly generates CSS custom properties.', () => {
     return generatePluginCss({ colors: ['rose'] }).then((css) => {
       expect(css).toContain(`--tw-ta-accent-500`);
     });
   });
 
-  it('correctly generate customized css custom properties.', () => {
+  it('correctly generates customized CSS custom properties.', () => {
     return generatePluginCss({ colors: ['rose'], cssVarsPrefix: 'color' }).then(
       (css) => {
         expect(css).toContain(`--color-accent-500`);
@@ -45,18 +45,26 @@ describe('with tailwindcss v3', () => {
     );
   });
 
-  it('correctly generate selected base style selectors.', () => {
+  it('correctly generates selected base style selectors.', () => {
     return generatePluginCss({ colors: ['rose'] }).then((css) => {
       expect(css).toContain(`[data-accent='rose']`);
       expect(css).not.toContain(`[data-accent='sky']`);
     });
   });
 
-  it('correctly generate selected base style selectors with root.', () => {
+  it('correctly generates selected base style selectors with root.', () => {
     return generatePluginCss({ colors: ['sky', 'rose'], root: 'sky' }).then(
       (css) => {
         expect(css).toContain(`:root, [data-accent='sky']`);
         expect(css).not.toContain(`:root, [data-accent='rose']`);
+      }
+    );
+  });
+
+  it('correctly generates root color on the top of base styles.', () => {
+    return generatePluginCss({ colors: ['sky', 'rose'], root: 'rose' }).then(
+      (css) => {
+        expect(css.indexOf(`:root, [data-accent='rose']`) === 0).toBeTruthy();
       }
     );
   });
@@ -93,13 +101,13 @@ describe('with tailwindcss v2', () => {
     });
   });
 
-  it('correctly generate css custom properties.', () => {
+  it('correctly generates CSS custom properties.', () => {
     return generatePluginCssV2({ colors: ['rose'] }).then((css) => {
       expect(css).toContain(`--tw-ta-accent-500`);
     });
   });
 
-  it('correctly generate customized css custom properties.', () => {
+  it('correctly generates customized CSS custom properties.', () => {
     return generatePluginCssV2({
       colors: ['rose'],
       cssVarsPrefix: 'color',
@@ -108,18 +116,26 @@ describe('with tailwindcss v2', () => {
     });
   });
 
-  it('correctly generate selected base style selectors.', () => {
+  it('correctly generates selected base style selectors.', () => {
     return generatePluginCssV2({ colors: ['rose'] }).then((css) => {
       expect(css).toContain(`[data-accent='rose']`);
       expect(css).not.toContain(`[data-accent='sky']`);
     });
   });
 
-  it('correctly generate selected base style selectors with root.', () => {
+  it('correctly generates selected base style selectors with root.', () => {
     return generatePluginCssV2({ colors: ['sky', 'rose'], root: 'sky' }).then(
       (css) => {
         expect(css).toContain(`:root, [data-accent='sky']`);
         expect(css).not.toContain(`:root, [data-accent='rose']`);
+      }
+    );
+  });
+
+  it('correctly generates root color on the top of base styles.', () => {
+    return generatePluginCssV2({ colors: ['sky', 'rose'], root: 'rose' }).then(
+      (css) => {
+        expect(css.indexOf(`:root, [data-accent='rose']`) === 0).toBeTruthy();
       }
     );
   });

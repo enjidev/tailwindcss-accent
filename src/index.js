@@ -13,6 +13,7 @@ module.exports = plugin.withOptions(
       : 'tw-ta';
 
     return ({ addBase }) => {
+      const rootStyles = {};
       const baseStyles = {};
 
       const PICK_COLORS = options.colors;
@@ -27,24 +28,26 @@ module.exports = plugin.withOptions(
       Object.keys(colors).forEach((name) => {
         // Omit unused colors and pick selected colors.
         if (!OMIT_COLORS.includes(name) && PICK_COLORS.includes(name)) {
-          // Add the :root selector if root option match with the current color.
-          const selector =
-            options.root !== name
-              ? `[data-accent='${name}']`
-              : `:root, [data-accent='${name}']`;
-
-          baseStyles[selector] = {};
+          const colorShades = colors[name];
 
           // Generate CSS Custom Properties for the current color.
-          const colorShades = colors[name];
+          const styles = {};
           Object.keys(colorShades).forEach((shade) => {
             const cssVar = `--${cssVarsPrefix}-accent-${shade}`;
-            baseStyles[selector][cssVar] = hexToRgb(colorShades[shade]);
+            styles[cssVar] = hexToRgb(colorShades[shade]);
           });
+
+          // Add color to root or base styles.
+          if (options.root === name) {
+            rootStyles[`:root, [data-accent='${name}']`] = styles;
+          } else {
+            baseStyles[`[data-accent='${name}']`] = styles;
+          }
         }
       });
 
-      // Register new base styles.
+      // Register new base styles. :root color comes first for CSS specificity.
+      addBase(rootStyles);
       addBase(baseStyles);
     };
   },
